@@ -7,7 +7,7 @@
 // This is the Splash Scene
 // This file contains the JS splash scene functions for index.html for chicken shooter
 
-//getting scene code from from phaser library 
+//getting splashscene code from from phaser library 
 class SplashScene extends Phaser.Scene {
   constructor() {
     super({ key: "splashScene" })

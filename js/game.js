@@ -11,7 +11,7 @@
 import SplashScene from "./splashScene.js"
 import TitleScene from "./titleScene.js"
 
-// Our game scene
+// all constants for game scenes
 const splashScene = new SplashScene()
 const titleScene = new TitleScene()
 
@@ -32,7 +32,7 @@ const config = {
   scale: {
     mode: Phaser.Scale.FIT,
     
-    // we place it in the middle of the page
+    // autocentering game to always appear in the middle of the screen
     autoCenter: Phaser.Scale.CENTER_BOTH
   }
 }

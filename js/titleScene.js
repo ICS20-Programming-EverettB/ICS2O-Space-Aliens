@@ -20,7 +20,7 @@ class TitleScene extends Phaser.Scene {
     this.cameras.main.setBackgroundColor("#00FFFF")
   }
 
-  //printing what title scene the user is currently on 
+  //printing the title scene back to the user
   preload () {
     console.log("Title Scene")
   }
