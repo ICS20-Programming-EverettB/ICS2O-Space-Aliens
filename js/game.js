@@ -28,7 +28,7 @@ const config = {
   },
   
   // set background color
-  backgroundColor: 0x0080FF,
+  backgroundColor: 0x0009FF,
   scale: {
     mode: Phaser.Scale.FIT,
     

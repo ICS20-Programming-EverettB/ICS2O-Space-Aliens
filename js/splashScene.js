@@ -17,7 +17,7 @@ class SplashScene extends Phaser.Scene {
   init (data) {
 
   //setting scene background color using RGB
-    this.cameras.main.setBackgroundColor("#FFFFFF")
+    this.cameras.main.setBackgroundColor("#060CC7")
   }
 
   //printing what scene the user is currently on 
@@ -25,7 +25,7 @@ class SplashScene extends Phaser.Scene {
     console.log("Splash Scene")
 
   //loading immaculata logo for splashscene
-    this.load.image("splashSceneBackground", "./assets/Immaculatasplashscene.jpg")
+    this.load.image("splashSceneBackground", "./assets/Immaculataicon.png")
   }
 
   //displaying immaculata logo for splash scene and setting x and y to be a 2d image that fits the size of the screen
@@ -35,9 +35,9 @@ class SplashScene extends Phaser.Scene {
     this.immaculataLogoImage.y = 1080 / 2
   }
 
-  //timer to go from splash scene to title scene
+  //timer to go from splash scene to title scene and to blank scene 
   update (time, delta) {
-    if (time > 3000) {
+    if (time > 5000) {
       this.scene.switch("titleScene")
     }
   }

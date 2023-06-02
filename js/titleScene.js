@@ -13,11 +13,11 @@ class TitleScene extends Phaser.Scene {
     super({ key: "titleScene" })
   }
   
- //this code gets the scene up and running, relating to phaser library.
+ //this code gets the scene up and running, relating to phaser library
   init (data) {
 
   //setting scene background color using RGB
-    this.cameras.main.setBackgroundColor("#FFFFFF")
+    this.cameras.main.setBackgroundColor("#00FFFF")
   }
 
   //printing what title scene the user is currently on 
