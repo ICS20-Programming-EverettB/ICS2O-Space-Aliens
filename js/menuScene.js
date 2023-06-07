@@ -21,13 +21,13 @@ class MenuScene extends Phaser.Scene {
   init (data) {
 
   //setting scene background color using RGB
-    this.cameras.main.setBackgroundColor("#00FFFF")
+    this.cameras.main.setBackgroundColor("#FF9933")
   }
 
   //printing the menu scene and button back to the user with background image
   preload () {
     console.log("Menu Scene")
-    this.load.image("menuSceneBackground", "./assets/fieldBackground.jpg")
+    this.load.image("menuSceneBackground", "./assets/menubackgroundfarm.jpg")
     this.load.image("startButton", "./assets/startButton.png")
   }
 
@@ -35,7 +35,7 @@ class MenuScene extends Phaser.Scene {
     
 //create data for background
 //setting cords and size of background image for menu scene
-    this.menuSceneBackgroundImage = this.add.sprite(0, 0, "menuSceneBackground").setScale(2)
+    this.menuSceneBackgroundImage = this.add.sprite(0, 0, "menuSceneBackground").setScale(1)
     this.menuSceneBackgroundImage.x = 1920 / 2
     this.menuSceneBackgroundImage.y = 1080 / 2
 
