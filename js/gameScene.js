@@ -50,34 +50,57 @@ class GameScene extends Phaser.Scene {
 
   update (time, delta) {
     
-//setting left key to move sprite to the left 
+//setting left key and A key to move sprite to the left 
     const keyLeftObj = this.input.keyboard.addKey("LEFT")
-
-//setting right key to move sprite to the right
+    const keyAObj = this.input.keyboard.addKey("A")
+    
+//setting right key and D key to move sprite to the right
     const keyRightObj = this.input.keyboard.addKey("RIGHT")
-
+    const keyDObj = this.input.keyboard.addKey("D")
+    
 //setting spacebar to shoot the egg
     const keySpaceObj = this.input.keyboard.addKey("SPACE")
 
-//setting how quick the chicken moves to the left
+//setting how quick the chicken moves to the left with LEFT key
     if (keyLeftObj.isDown === true) {
       this.ship.x = this.ship.x - 13
       
-//chicken will warp when touching right side of screen
+//chicken will warp when touching left side of screen
+      if (this.ship.x < 0) {
+        this.ship.x = 1920
+      }
+    }
+
+//setting how quick the chicken moves to the left with D key
+    if (keyAObj.isDown === true) {
+      this.ship.x = this.ship.x - 13
+      
+//chicken will warp when touching left side of screen
       if (this.ship.x < 0) {
         this.ship.x = 1920
       }
     }
     
-//setting how quick the chicken moves to the right
+//setting how quick the chicken moves to the right with RIGHT key
     if (keyRightObj.isDown === true) {
       this.ship.x = this.ship.x + 13
       
-//chicken will warp when touching left side of screen
+//chicken will warp when touching right side of screen
       if (this.ship.x > 1920) {
         this.ship.x = 0
       }
     }
+
+//setting how quick the chicken moves to the right with D key
+    if (keyDObj.isDown === true) {
+      this.ship.x = this.ship.x + 13
+      
+//chicken will warp when touching right side of screen
+      if (this.ship.x > 1920) {
+        this.ship.x = 0
+      }
+    }
+    
 // if statment for creating new egg on the cords of chicken sprite when SPACEBAR is clicked. 
     if (keySpaceObj.isDown === true) {
       if (this.fireMissile === false) {
