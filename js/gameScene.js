@@ -38,10 +38,15 @@ class GameScene extends Phaser.Scene {
     this.ship = null
     this.fireMissile = false
 
-// adding score and score display variables
+// adding score variable with color and font
     this.score = 0
     this.scoreText = null
     this.scoreTextStyle = { font: "65x Arial", fill: "#fde4b9", align: "center"}
+
+//adding game over variable with color and font
+    this.gameOverText = null
+    this.gameOverTextStyle = { font: "65x Arial", fill: "#fde4b9", align: "center"}
+    
   }
   
  //this code gets the scene up and running, relating to phaser library
@@ -55,16 +60,18 @@ class GameScene extends Phaser.Scene {
   preload () {
     console.log("Game Scene")
 
-//image for background of the game, egg projectile, hawk and chicken sprite
+//image for background of the game, egg projectile, winscene, hawk and chicken sprite
     this.load.image("farmBackground", "./assets/gamebackground.webp")
     this.load.image("chicken", "./assets/chicken.png")
     this.load.image("missile", "./assets/Egg.webp")
     this.load.image("hawk", "./assets/hawk.png")
+    this.load.image("winScene", "./assets/WinScene.png")
 
 //sound files
 //sound for egg projectile and for hawk being eliminated (made by julien for me)
     this.load.audio("eggsound", "./assets/eggsound.mp3")
     this.load.audio("explosion", "./assets/hawknoise.mp3")
+    this.load.audio("death", "./assets/gameovernoise.mp3")
   }
 
 //setting scale and origin of background image
@@ -97,10 +104,39 @@ class GameScene extends Phaser.Scene {
 //getting score to display
       this.score = this.score + 1
       this.scoreText.setText("Score: " + this.score.toString())
+
+//displaying win scene 
+      if (this.score == 3) {
+        this.background = this.add.image(0, 0,"winScene").setScale(2, 1.6)
+        this.background.x = 1920 / 2
+        this.background.y = 1080 / 2
+        this.physics.pause()
+        this.cameras.main.setBackgroundColor("#FF9933")
+      }
       
 //creating 2 hawks for each hawk destroyed 
       this.createHawk()
       this.createHawk()
+    }.bind(this))
+
+//Collision between hawk and chicken, pausing the game when they collide 
+    this.physics.add.collider(this.ship, this.hawkGroup, function (shipCollide, hawkCollide) {
+      this.sound.play("death")
+      this.physics.pause()
+    
+//when they collide, destroy 
+      hawkCollide.destroy()
+      shipCollide.destroy()
+
+//display when game over
+      this.gameOverText = this.add.text(1920 / 2, 1080 / 2, "Game Over!\nClick to play again.", this.gameOverTextStyle).setOrigin(0.5).setScale(7)
+      this.gameOverText.setInteractive({ useHandCursor: true })
+      
+//reset score when game over
+      this.score=0
+
+// sending user back to gameScene when they click play again
+      this.gameOverText.on("pointerdown", () => this.scene.start("gameScene"))
     }.bind(this))
   }
 
