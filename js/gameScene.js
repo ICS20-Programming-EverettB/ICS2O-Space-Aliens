@@ -43,10 +43,16 @@ class GameScene extends Phaser.Scene {
     this.scoreText = null
     this.scoreTextStyle = { font: "65x Arial", fill: "#fde4b9", align: "center"}
 
+//adding variables and color, font for highscore 
+    this.highScoreText = null
+    this.highScoreTextStyle = { font: "65x Arial", fill: "#fde4b9", align: "center"}
+ 
 //adding game over variable with color and font
     this.gameOverText = null
     this.gameOverTextStyle = { font: "65x Arial", fill: "#fde4b9", align: "center"}
-    
+
+//calculating user highScore and saving it to local storage
+    this.highScore = localStorage.getItem("highScore") || 0
   }
   
  //this code gets the scene up and running, relating to phaser library
@@ -65,7 +71,6 @@ class GameScene extends Phaser.Scene {
     this.load.image("chicken", "./assets/chicken.png")
     this.load.image("missile", "./assets/Egg.webp")
     this.load.image("hawk", "./assets/hawk.png")
-    this.load.image("winScene", "./assets/WinScene.png")
 
 //sound files
 //sound for egg projectile and for hawk being eliminated (made by julien for me)
@@ -73,15 +78,24 @@ class GameScene extends Phaser.Scene {
     this.load.audio("explosion", "./assets/hawknoise.mp3")
     this.load.audio("death", "./assets/gameovernoise.mp3")
   }
-
+  
 //setting scale and origin of background image
   create (data) {
     this.background = this.add.image(0, 0, "farmBackground").setScale(1.6)
     this.background.setOrigin(0, 0)
+    
+//background music from html 
+    let myAudio = document.querySelector("audio")
+    myAudio.volume = 0.3
+    myAudio.play()
 
 //displaying score back to user and calculating score 
     this.scoreText = this.add.text(10, 10, "Score: " + this.score.toString(), this.scoreTextStyle).setScale(5)
 
+//displaying score back to user and calculating score 
+    this.highScoreText = this.add.text(10, 55, "High Score: " + this.highScore.toString(), this.highScoreTextStyle).setScale(5)
+    
+    
 //setting scale and origin of chicken sprite
     this.ship = this.physics.add.sprite(1920 / 2, 1080 - 100, "chicken").setScale(.1)
 
@@ -105,25 +119,33 @@ class GameScene extends Phaser.Scene {
       this.score = this.score + 1
       this.scoreText.setText("Score: " + this.score.toString())
 
-//displaying win scene 
-      if (this.score == 3) {
-        this.background = this.add.image(0, 0,"winScene").setScale(2, 1.6)
-        this.background.x = 1920 / 2
-        this.background.y = 1080 / 2
-        this.physics.pause()
-        this.cameras.main.setBackgroundColor("#FF9933")
+//displaying win scene. Sending player to winScene if they get 100 points
+      if (this.score == 100) {
+         this.scene.switch("winScene")
       }
       
 //creating 2 hawks for each hawk destroyed 
       this.createHawk()
       this.createHawk()
+      
+//displaying highscore to user and getting highscore with if statment 
+      if (this.score > this.highScore) {
+        this.highScore = this.score
+        localStorage.setItem("highScore", this.highScore)
+        this.highScoreText.setText("High Score: " + this.highScore.toString())
+      }
     }.bind(this))
 
 //Collision between hawk and chicken, pausing the game when they collide 
     this.physics.add.collider(this.ship, this.hawkGroup, function (shipCollide, hawkCollide) {
+
+//disable space bar when loss
+      const keySpaceObj = this.input.keyboard.addKey ("SPACE")
+      keySpaceObj.enabled = false 
       this.sound.play("death")
       this.physics.pause()
-    
+      myAudio.volume = 0.0
+      
 //when they collide, destroy 
       hawkCollide.destroy()
       shipCollide.destroy()
@@ -138,6 +160,14 @@ class GameScene extends Phaser.Scene {
 // sending user back to gameScene when they click play again
       this.gameOverText.on("pointerdown", () => this.scene.start("gameScene"))
     }.bind(this))
+
+// random hawk spawn so you can not softlock the game
+        this.hawkTimer = this.time.addEvent({
+      delay: 3000,
+      callback: this.createHawk,
+      callbackScope: this,
+      loop: true
+    });
   }
 
   update (time, delta) {
