@@ -119,7 +119,7 @@ class GameScene extends Phaser.Scene {
       this.scoreText.setText("Score: " + this.score.toString())
 
 //displaying win scene. Sending player to winScene if they get 100 points
-      if (this.score == 100) {
+      if (this.score == 5) {
          this.scene.switch("winScene")
       }
       
