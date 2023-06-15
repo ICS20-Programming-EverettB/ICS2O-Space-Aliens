@@ -5,7 +5,7 @@
 // Created by: Everett Bernard
 // Created on: June 2023
 // This is the Splash Scene
-// This file contains the JS menu scene functions for index.html for chicken shooter
+// This file contains the JS win scene functions for index.html for chicken shooter
 
 //getting scene code from from phaser library 
 class WinScene extends Phaser.Scene {
@@ -20,7 +20,7 @@ class WinScene extends Phaser.Scene {
  //this code gets the scene up and running, relating to phaser library
   init (data) {
 
-  //setting scene background color using RGB
+  //setting winscene background color using RGB
     this.cameras.main.setBackgroundColor("#FF9933")
   }
 
@@ -43,7 +43,7 @@ class WinScene extends Phaser.Scene {
 //setting size and scale to button to start game
     this.startButton= this.add.sprite(1920 / 2, (1080 / 2) + 100, "winButton").setScale(0.50)
     
-//setting button image to be interactive as a button, creating it functional
+//setting button image to be interactive as a button, making it functional
     this.startButton.setInteractive({ useHandCursor: true})
     this.startButton.on("pointerdown", () => this.clickButton())
   }

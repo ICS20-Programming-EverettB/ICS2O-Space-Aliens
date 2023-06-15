@@ -7,7 +7,7 @@
 // This is the Phaser3 configuration file
 // This file contains the JS functions for index.html for chicken shooter
 
-// Connecting splashScene.js, titleScene.js, menuScene.js and gameScene.js to game.js
+// Connecting splashScene.js, titleScene.js, menuScene.js, winScene.js sand gameScene.js to game.js
 import SplashScene from "./splashScene.js"
 import TitleScene from "./titleScene.js"
 import MenuScene from "./menuScene.js"
@@ -46,7 +46,7 @@ const config = {
 
 const game = new Phaser.Game(config)
 
-// load splashscene and titlescene
+// loading all scenes for later use 
 //NOTE: any "key" is global and CAN NOT be reused
 game.scene.add("splashScene", splashScene)
 game.scene.add("titleScene", titleScene)

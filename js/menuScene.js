@@ -24,7 +24,7 @@ class MenuScene extends Phaser.Scene {
     this.cameras.main.setBackgroundColor("#FF9933")
   }
 
-  //printing the menu scene and button back to the user with background image
+  //fetching menu scene and button from assets folder and assigning them to variables
   preload () {
     console.log("Menu Scene")
     this.load.image("menuSceneBackground", "./assets/menubackgroundfarm.jpg")
@@ -43,7 +43,7 @@ class MenuScene extends Phaser.Scene {
 //setting size and scale to button to start game
     this.startButton= this.add.sprite(1920 / 2, (1080 / 2) + 100, "startButton").setScale(0.15)
     
-//setting button image to be interactive as a button, creating it functional
+//setting button image to be interactive as a button, making it functional
     this.startButton.setInteractive({ useHandCursor: true})
     this.startButton.on("pointerdown", () => this.clickButton())
   }
@@ -51,7 +51,7 @@ class MenuScene extends Phaser.Scene {
   update (time, delta) {
   }
 
-//Click button function 
+//When button is clicked it will send user to gameScene
   clickButton () {
     this.scene.start("gameScene")
   }

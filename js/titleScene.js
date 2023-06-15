@@ -28,7 +28,7 @@ class TitleScene extends Phaser.Scene {
     this.cameras.main.setBackgroundColor("#FD7C4C")
   }
 
-//printing the title scene back to the user
+//fetching titlescene background image
   preload () {
     console.log("Title Scene")
     this.load.image("titleSceneBackground", "./assets/ChickenTitleScene.png")
@@ -44,7 +44,7 @@ class TitleScene extends Phaser.Scene {
 //adding text to titlescene, this text displays who created the game to the right of the screen
     this.titleSceneText = this.add.text(1920 / 2, (1080 / 2) + 350, "Created by: Everett Bernard", this.titleSceneTextStyle).setOrigin(-0.5)
   }
-
+//Scene timer and switching scene to menuScene after timer
   update (time, delta) {
     if (time > 10000) {
       this.scene.switch("menuScene")

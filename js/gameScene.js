@@ -66,14 +66,14 @@ class GameScene extends Phaser.Scene {
   preload () {
     console.log("Game Scene")
 
-//image for background of the game, egg projectile, winscene, hawk and chicken sprite
+//image for background of the game, egg projectile, hawk and chicken sprite
     this.load.image("farmBackground", "./assets/gamebackground.webp")
     this.load.image("chicken", "./assets/chicken.png")
     this.load.image("missile", "./assets/Egg.webp")
     this.load.image("hawk", "./assets/hawk.png")
 
 //sound files
-//sound for egg projectile and for hawk being eliminated (made by julien for me)
+//sound for egg projectile, chicken death and for hawk being eliminated (recorded by julien for me)
     this.load.audio("eggsound", "./assets/eggsound.mp3")
     this.load.audio("explosion", "./assets/hawknoise.mp3")
     this.load.audio("death", "./assets/gameovernoise.mp3")
@@ -84,17 +84,16 @@ class GameScene extends Phaser.Scene {
     this.background = this.add.image(0, 0, "farmBackground").setScale(1.6)
     this.background.setOrigin(0, 0)
     
-//background music from html 
+//playing background music from html 
     let myAudio = document.querySelector("audio")
     myAudio.volume = 0.3
     myAudio.play()
 
-//displaying score back to user and calculating score 
+//displaying score  
     this.scoreText = this.add.text(10, 10, "Score: " + this.score.toString(), this.scoreTextStyle).setScale(5)
 
-//displaying score back to user and calculating score 
+//text for highscore and displaying score
     this.highScoreText = this.add.text(10, 55, "High Score: " + this.highScore.toString(), this.highScoreTextStyle).setScale(5)
-    
     
 //setting scale and origin of chicken sprite
     this.ship = this.physics.add.sprite(1920 / 2, 1080 - 100, "chicken").setScale(.1)
@@ -115,7 +114,7 @@ class GameScene extends Phaser.Scene {
 //sound for hawk being destroyed
       this.sound.play("explosion")
       
-//getting score to display
+//calculating score to display
       this.score = this.score + 1
       this.scoreText.setText("Score: " + this.score.toString())
 
@@ -128,7 +127,7 @@ class GameScene extends Phaser.Scene {
       this.createHawk()
       this.createHawk()
       
-//displaying highscore to user and getting highscore with if statment 
+// calculating highscore with if statment 
       if (this.score > this.highScore) {
         this.highScore = this.score
         localStorage.setItem("highScore", this.highScore)
@@ -139,14 +138,14 @@ class GameScene extends Phaser.Scene {
 //Collision between hawk and chicken, pausing the game when they collide 
     this.physics.add.collider(this.ship, this.hawkGroup, function (shipCollide, hawkCollide) {
 
-//disable space bar when loss
+//disable space bar when game paused
       const keySpaceObj = this.input.keyboard.addKey ("SPACE")
       keySpaceObj.enabled = false 
       this.sound.play("death")
       this.physics.pause()
       myAudio.volume = 0.0
       
-//when they collide, destroy 
+//when they collide, destroy hawk and chicken 
       hawkCollide.destroy()
       shipCollide.destroy()
 
@@ -161,9 +160,9 @@ class GameScene extends Phaser.Scene {
       this.gameOverText.on("pointerdown", () => this.scene.start("gameScene"))
     }.bind(this))
 
-// random hawk spawn so you can not softlock the game
+// random hawk spawn so you can not softlock the game (info from ben)
         this.hawkTimer = this.time.addEvent({
-      delay: 3000,
+      delay: 5000,
       callback: this.createHawk,
       callbackScope: this,
       loop: true
